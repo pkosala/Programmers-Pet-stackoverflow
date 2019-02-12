@@ -26,8 +26,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Flask/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+            <state relative-caret-position="111">
+              <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -119,6 +119,11 @@
               <item name="pyspark" type="462c0819:PsiDirectoryNode" />
               <item name="batch" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SOF" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SOF" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -191,11 +196,11 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.19335938" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.19335938" />
       <window_info anchor="bottom" id="TODO" order="10" />
       <window_info anchor="right" id="R Packages" order="2" />
       <window_info anchor="right" id="R Graphics" order="0" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="1" sideWeight="0.50065106" side_tool="true" visible="true" weight="0.40275863" />
+      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50065106" side_tool="true" visible="true" weight="0.40275863" />
       <window_info anchor="bottom" id="Run" order="6" weight="0.32965517" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="Python Console" order="3" />
@@ -504,8 +509,8 @@ json.loads(request.form)</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/Flask/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+        <state relative-caret-position="111">
+          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
