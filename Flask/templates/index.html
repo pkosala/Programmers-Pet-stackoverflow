@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack Overflow Search</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="static/app.js"></script>
+    <link href="static/app.css" rel="stylesheet" type="text/css" />
+    <!--<style type="text/css" src="static/app.css"></style>-->
+</head>
+<body>
+<div class='container'>
+    <form>
+        Description: <textarea id="description_input" rows="20" cols="100" name=description></textarea><br>
+        Tags: <textarea id="tags_input" rows="4" cols="100" name=tags></textarea> <br>
+        <br>
+        <a href=# id=process_input><button class='btn btn-default'>Submit</button></a><span id="errorname" class="bold-red"></span>
+    </form>
+    <br>
+    <div id="results" ></div>
+</div>
+</body>
+</html>
