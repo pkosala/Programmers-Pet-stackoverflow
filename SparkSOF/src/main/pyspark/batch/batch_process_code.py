@@ -11,6 +11,7 @@ import random
 from pyspark.ml.feature import StopWordsRemover
 from pyspark.ml.feature import Tokenizer
 
+
 import nltk
 nltk.download("wordnet")
 from nltk.stem import WordNetLemmatizer
@@ -28,7 +29,7 @@ maxShingleID = 2 ** 32 - 1
 nextPrime = 4294967311
 
 
-def pick_random_coeffs(k):
+def pick_random_coeffs( k):
     #  TODO: Move this to initialize DB
     randList = []
     while k > 0:
@@ -45,7 +46,6 @@ def pick_random_coeffs(k):
 
     return randList
 
-
 def get_code(body):
     if body is None or body == '':
         return None
@@ -53,24 +53,14 @@ def get_code(body):
     code = re.sub('\s+', ' ', ' '.join(code)) # replace all new lines and multiple spaces with single space
     # code = re.sub(r'[^\x00-\x7f]', r'', code) # remove all non-ascii characters
     # return code.lower()
-    code = re.sub(r'<[^>]+>', '', code, flags=re.DOTALL)  # remove all tags
+    code = re.sub(r'<[^>]+>', ' ', code, flags=re.DOTALL)  # remove all tags
     code = re.sub(r'\s+', ' ', code, flags=re.DOTALL)  # replace all new lines and multiple spaces with single space
-    code = re.sub(r'[^\x00-\x7f]', r'', code)  # remove all non-ascii characters
-    code = re.sub('[' + string.punctuation + ']', '', code)  # remove all punctuations
+    code = re.sub(r'[^\x00-\x7f]', r' ', code)  # remove all non-ascii characters
+    code = re.sub('[' + string.punctuation + ']', ' ', code)  # remove all punctuations
+    code = re.sub(r'[^A-Za-z]', ' ', code)
+    code = re.sub(r'\s+', ' ', code, flags=re.DOTALL)  # replace all new lines and multiple spaces with single space
+
     return code.lower()
-
-
-def get_description(body, title=''):
-    if body is None or body == '':
-        return None
-    body = title +' '+body
-    desc = re.sub('<code>.*?</code>', '', body, flags=re.DOTALL) # remove code from description
-    desc = re.sub(r'<[^>]+>', '', desc, flags=re.DOTALL) # remove all tags
-    desc = re.sub(r'\s+', ' ', desc, flags=re.DOTALL) # replace all new lines and multiple spaces with single space
-    desc = re.sub(r'[^\x00-\x7f]', r'', desc) # remove all non-ascii characters
-    desc = re.sub('[' + string.punctuation + ']', '', desc) # remove all punctuations
-    return desc.lower()
-
 
 def get_tags(tags):
     tag_array = str(tags).split('|')
@@ -78,7 +68,7 @@ def get_tags(tags):
     return tag_array
 
 
-# remove stem words from descriptioon
+# remove stem words from code
 def lemmatize(tokens):
     wordnet_lemmatizer = WordNetLemmatizer()
     stems = [wordnet_lemmatizer.lemmatize(token) for token in tokens if len(token) > 1]
@@ -113,6 +103,8 @@ def generate_minhash_signatures(shingles, coeffA, coeffB):
     return signature
 
 
+
+
 df = sqlContext.read.json(sfo_bucket)
 df = df.withColumn("id", df["id"].cast(IntegerType()))
 df.show()
@@ -122,28 +114,28 @@ df = df.withColumn("tags", udf_get_tag_array("tags"))
 
 df.show()
 
-# udf_getCode = udf(get_code, StringType())
-# df_with_code = df.withColumn("code", udf_getCode("body"))
-# df_with_code.show()
-
-udf_getDesc = udf(get_description, StringType())
-df = df.withColumn("desc", udf_getDesc("body", "title"))
-df = df.select('id', 'desc',  'title', 'tags')
+udf_getCode = udf(get_code, StringType())
+df = df.withColumn("code", udf_getCode("body"))
 df.show()
 
-tokenizer = Tokenizer(inputCol="desc", outputCol="desc_tokens")
+df = df.select('id', 'code', 'title', 'tags')
+df = df.withColumn("code_length", fn.length('code'))
+df = df.filter(fn.col('code_length') > 50)
+df.show()
+
+tokenizer = Tokenizer(inputCol="code", outputCol="code_tokens")
 df = tokenizer.transform(df)
 
-stop_words_remover = StopWordsRemover(inputCol="desc_tokens", outputCol="desc_stop_words_removed")
+stop_words_remover = StopWordsRemover(inputCol="code_tokens", outputCol="code_stop_words_removed")
 df = stop_words_remover.transform(df)
 
 stem = udf(lambda tokens: lemmatize(tokens), ArrayType(StringType()))
-df = df.withColumn("desc_stemmed", stem("desc_stop_words_removed"))
+df = df.withColumn("code_stemmed", stem("code_stop_words_removed"))
 df.show()
 
-udf_shingle = udf(generate_shingles, ArrayType(IntegerType()))
-df = df.withColumn('shingles', udf_shingle("desc_stop_words_removed"))
-df = df.select('id', 'shingles','title','tags')
+udf_shingle = udf(generate_shingles, ArrayType(LongType()))
+df = df.withColumn('shingles', udf_shingle("code_stop_words_removed"))
+df = df.select('id', 'shingles', 'title', 'tags')
 df.show()
 
 coeffA = pick_random_coeffs(numHashes)
@@ -151,14 +143,13 @@ coeffB = pick_random_coeffs(numHashes)
 
 coeffs = zip(coeffA, coeffB)
 coeff_dict = [{"coeffA":x[0],"coeffB":x[1]} for x in coeffs]
-coeff_schema = StructType([StructField('coeffA', IntegerType(), True), StructField('coeffB', IntegerType(), True)])
-coeff_df = sqlContext.createDataFrame(data = coeff_dict, schema = coeff_schema)
+coeff_schema = StructType([StructField('coeffA', LongType(), True), StructField('coeffB', LongType(), True)])
+coeff_df = sqlContext.createDataFrame(data = coeff_dict,schema = coeff_schema)
 
 
-minhash_udf = udf(generate_minhash_signatures, ArrayType(IntegerType()))
+minhash_udf = udf(generate_minhash_signatures, ArrayType(LongType()))
 df = df.withColumn('minhash', minhash_udf("shingles", fn.array([fn.lit(x) for x in coeffA]), fn.array([fn.lit(x) for x in coeffB])))
-df = df.select('id', 'minhash','title','tags')
-
+df = df.select('id', 'minhash', 'title', 'tags')
 df.show()
 
 def insert_db(df, table_name, _mode):
@@ -170,8 +161,9 @@ def insert_db(df, table_name, _mode):
     }
     df.write.jdbc(url=url, table=table_name, mode=_mode, properties=properties)
 
-insert_db(df, "Post", "overwrite")
-insert_db(coeff_df, "coefficients_post", "overwrite")
+
+insert_db(df, "Post_code", "overwrite")
+insert_db(coeff_df, "coefficients_code", "overwrite")
 
 
 

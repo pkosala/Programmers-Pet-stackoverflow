@@ -1,23 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stack Overflow Search</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="static/app.js"></script>
-    <link href="static/app.css" rel="stylesheet" type="text/css" />
-    <!--<style type="text/css" src="static/app.css"></style>-->
-</head>
-<body>
-<div class='container'>
-    <form>
-        Description: <textarea id="description_input" rows="20" cols="100" name=description></textarea><br>
-        Tags: <textarea id="tags_input" rows="4" cols="100" name=tags></textarea> <br>
-        <br>
-        <a href=# id=process_input><button class='btn btn-default'>Submit</button></a><span id="errorname" class="bold-red"></span>
-    </form>
-    <br>
-    <div id="results" ></div>
-</div>
-</body>
+   <head>
+      <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+      <title>Stack Overflow Search</title>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script type="text/javascript" src="static/app.js"></script>
+      <link rel="stylesheet" type="text/css"  href="static/app.css"/>
+   </head>
+   <div class="overlay" style="display:none">
+      <label id="please_wait"> Please wait while we load the results: </label>
+      <div class="loader" id="loaderDiv"></div>
+   </div>
+   <h1>Programmer's pet</h1>
+   <body>
+      <div class="container">
+          <h3>Search for similar stack overflow posts</h3>
+          <!--<p> Tool for finding near similar stack overflow posts.</p>-->
+     </div>
+      <div class='container'>
+         <form>
+            <label for="description_input">Query: </label>
+            <textarea id="description_input" rows="6" cols="100" name=description placeholder="Enter description of your query "></textarea><br>
+            <label for="code_input">Code: </label>
+            <textarea id="code_input" rows="6" cols="100" name=code placeholder="Enter code here (optional) "></textarea><br>
+            <label for="tags_input">Tags: </label>
+            <textarea id="tags_input" rows="1" cols="100" name=tags placeholder="comma seperated: ajax, html, csv"></textarea> <br>
+            <br>
+            <a href=# id=process_input style="margin-bottom:10px"><button type= "submit" value="submit" class='btn btn-default'>Submit</button></a>
+             <span id="errorname" class="bold-red"></span>
+         </form>
+         <br>
+         <br>
+         <div style="margin-top: 20px">
+            <table>
+               <thead>
+                  <tr>
+                     <th>Results by Query</th>
+                     <th>Results by Code</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td>
+                        <div id="results_by_query"></div>
+                     </td>
+                     <td>
+                        <div id="results_by_code"></div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </body>
 </html>
