@@ -36,7 +36,7 @@ $(function () {
 					match_results = JSON.parse(response);
 					matches_by_query = match_results['matches_by_query']
 					matches_by_code = match_results['matches_by_code']
-					if (matches_by_query === matches_by_query || array.length == 0) {
+					if (matches_by_query === undefined || matches_by_query.length == 0) {
 						var para = document.createElement("p");
 						var node = document.createTextNode("Sorry, did not find any match");
 						query_div.appendChild(node);

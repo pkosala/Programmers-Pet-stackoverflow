@@ -17,7 +17,12 @@ from nltk import word_tokenize
 maxShingleID = 2 ** 25 - 1
 nextPrime = 4294967311
 
-
+db_dict_table_names = {
+    "coefficients_posts": "coefficients_post",
+    "coefficients_code": "coefficients_code",
+    "posts_table": "Post_batch",
+    "code_table": "Post_code_batch"
+}
 def getCoefficients(table_name):
     coeffA, coeffB =[],[]
     conn = None
@@ -82,7 +87,7 @@ def get_similar_posts_by_query(signature_of_query, tags_string, limit_count):
     from (
     select id, title,
     round(array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )/(array_upper(mergeArrays(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]) , 1 ) *1.0), 3) as jaccard_sim
-    from post where tags @> '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0
+    from """+db_dict_table_names["posts_table"]+""" where tags @> '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0
     ) t 
     order by jaccard_sim desc
     limit """+str(limit_count)+"""  
@@ -90,7 +95,7 @@ def get_similar_posts_by_query(signature_of_query, tags_string, limit_count):
     from (
     select id, title,
     round(array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )/(array_upper(mergeArrays(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]) , 1 ) *1.0), 3) as jaccard_sim
-    from post where tags && '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0 AND id not in (SELECT id from match_all_tags)
+    from """+db_dict_table_names["posts_table"]+""" where tags && '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0 AND id not in (SELECT id from match_all_tags)
     ) t 
     order by jaccard_sim desc
     limit """+str(limit_count)+"""  
@@ -132,7 +137,7 @@ def get_similar_posts_by_code(signature_of_code, tags_string, limit_count):
     from (
     select id, title,
     round(array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )/(array_upper(mergeArrays(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]) , 1 ) *1.0), 3) as jaccard_sim
-    from post_code where tags @> '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0
+    from """+db_dict_table_names["code_table"]+""" where tags @> '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0
     ) t 
     order by jaccard_sim desc
     limit """+str(limit_count)+"""  
@@ -140,7 +145,7 @@ def get_similar_posts_by_code(signature_of_code, tags_string, limit_count):
     from (
     select id, title,
     round(array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )/(array_upper(mergeArrays(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]) , 1 ) *1.0), 3) as jaccard_sim
-    from post_code where tags && '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0 AND id not in (SELECT id from match_all_tags)
+    from """+db_dict_table_names["code_table"]+""" where tags && '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0 AND id not in (SELECT id from match_all_tags)
     ) t 
     order by jaccard_sim desc
     limit """+str(limit_count)+"""  
@@ -206,7 +211,7 @@ def generate_shingles(desc, shingle_size=2):
     for each_gram in n_grams:
         shingle = ' '.join(each_gram)
         crc = binascii.crc32(shingle.encode()) & 0xffffffff
-        print(shingle, crc)
+        # print(shingle, crc)
         shinglesInDoc.add(crc)
     return list(shinglesInDoc)
 
@@ -265,7 +270,7 @@ def get_processed_code(code):
 
 
 def process_query_get_results(query, tags_string, code):
-    desc_coeffA, desc_coeffB = getCoefficients("coefficients_post")
+    desc_coeffA, desc_coeffB = getCoefficients(db_dict_table_names["coefficients_posts"])
     processed_query = get_processed_query(query)
     shingles_in_query = generate_shingles(processed_query)
     signature_of_query = generate_minhash_signature(shingles_in_query, desc_coeffA, desc_coeffB)
@@ -274,7 +279,7 @@ def process_query_get_results(query, tags_string, code):
     if code.strip() is None or code.strip() =="":
         similar_posts_by_code =[]
     else:
-        code_coeffA, code_coeffB = getCoefficients("coefficients_code")
+        code_coeffA, code_coeffB = getCoefficients(db_dict_table_names["coefficients_code"])
         processed_code = get_processed_code(code)
         shingles_in_code = generate_shingles(processed_code)
         signature_of_code = generate_minhash_signature(shingles_in_code, code_coeffA, code_coeffB)
