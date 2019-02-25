@@ -1,0 +1,36 @@
+
+-- Index: idx_hash
+
+DROP INDEX IF EXISTS public.idx_hash;
+
+CREATE INDEX idx_hash
+    ON public.post_batch USING gist
+    (minhash)
+    TABLESPACE pg_default;
+
+-- Index: idx_tags
+
+DROP INDEX IF EXISTS public.idx_tags;
+
+CREATE INDEX idx_tags
+    ON public.post_batch USING gist
+    (tags COLLATE pg_catalog."default")
+    TABLESPACE pg_default;
+
+-- Index: idx_hash_code
+
+-- DROP INDEX public.idx_hash_code;
+
+CREATE INDEX idx_hash_code
+    ON public.post_code_batch USING gist
+    (minhash)
+    TABLESPACE pg_default;
+
+-- Index: idx_tags_code
+
+-- DROP INDEX public.idx_tags_code;
+
+CREATE INDEX idx_tags_code
+    ON public.post_code_batch USING gist
+    (tags COLLATE pg_catalog."default")
+    TABLESPACE pg_default;

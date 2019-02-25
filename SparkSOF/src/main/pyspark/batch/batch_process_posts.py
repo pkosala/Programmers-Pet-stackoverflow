@@ -10,6 +10,8 @@ import binascii
 import random
 from pyspark.ml.feature import StopWordsRemover
 from pyspark.ml.feature import Tokenizer
+from pyspark.sql import DataFrameReader
+
 
 import nltk
 nltk.download("wordnet")
@@ -97,14 +99,14 @@ def generate_shingles(desc, shingle_size=2):
     return list(shinglesInDoc)
 
 
-def generate_minhash_signatures(shingles, coeffA, coeffB):
+def generate_minhash_signatures(shingles):
     # TODO: make it generic to work for any no. of hash functions
 
     signature = []
     for i in range(0, numHashes):
         minHashCode = nextPrime + 1
         for shingleID in shingles:
-            hashCode = (coeffA[i] * shingleID + coeffB[i]) % nextPrime
+            hashCode = (coeffA.value[i] * shingleID + coeffB.value[i]) % nextPrime
             # hashCode = shingleID//1000
             if hashCode < minHashCode:
                 minHashCode = hashCode
@@ -112,6 +114,18 @@ def generate_minhash_signatures(shingles, coeffA, coeffB):
         signature.append(minHashCode)
     return signature
 
+
+def read_db(table_name):
+    url = "jdbc:postgresql://ec2-3-94-26-85.compute-1.amazonaws.com/insight"
+    properties = {
+        "user": "pooja",
+        "password": "123",
+        "driver": "org.postgresql.Driver"
+    }
+    df = DataFrameReader(sqlContext).jdbc(
+        url=url, table=table_name, properties=properties
+    )
+    return df
 
 df = sqlContext.read.json(sfo_bucket)
 df = df.withColumn("id", df["id"].cast(IntegerType()))
@@ -143,20 +157,25 @@ df.show()
 
 udf_shingle = udf(generate_shingles, ArrayType(IntegerType()))
 df = df.withColumn('shingles', udf_shingle("desc_stop_words_removed"))
-df = df.select('id', 'shingles','title','tags')
+df = df.select('id', 'shingles', 'title', 'tags')
 df.show()
 
-coeffA = pick_random_coeffs(numHashes)
-coeffB = pick_random_coeffs(numHashes)
+# coeffA = pick_random_coeffs(numHashes)
+# coeffB = pick_random_coeffs(numHashes)
+#
+# coeffs = zip(coeffA, coeffB)
+# coeff_dict = [{"coeffA":x[0],"coeffB":x[1]} for x in coeffs]
+# coeff_schema = StructType([StructField('coeffA', IntegerType(), True), StructField('coeffB', IntegerType(), True)])
+# coeff_df = sqlContext.createDataFrame(data = coeff_dict, schema = coeff_schema)
 
-coeffs = zip(coeffA, coeffB)
-coeff_dict = [{"coeffA":x[0],"coeffB":x[1]} for x in coeffs]
-coeff_schema = StructType([StructField('coeffA', IntegerType(), True), StructField('coeffB', IntegerType(), True)])
-coeff_df = sqlContext.createDataFrame(data = coeff_dict, schema = coeff_schema)
+coeff_df = read_db("coefficients_post")
+coeffA = sc.broadcast([int(row.coeffA) for row in coeff_df.select("coeffA").collect()])
+coeffB = sc.broadcast([int(row.coeffB) for row in coeff_df.select("coeffB").collect()])
 
 
 minhash_udf = udf(generate_minhash_signatures, ArrayType(IntegerType()))
-df = df.withColumn('minhash', minhash_udf("shingles", fn.array([fn.lit(x) for x in coeffA]), fn.array([fn.lit(x) for x in coeffB])))
+# df = df.withColumn('minhash', minhash_udf("shingles", fn.array([fn.lit(x) for x in coeffA]), fn.array([fn.lit(x) for x in coeffB])))
+df = df.withColumn('minhash', minhash_udf("shingles"))
 df = df.select('id', 'minhash','title','tags')
 
 df.show()
@@ -171,7 +190,7 @@ def insert_db(df, table_name, _mode):
     df.write.jdbc(url=url, table=table_name, mode=_mode, properties=properties)
 
 insert_db(df, "Post", "overwrite")
-insert_db(coeff_df, "coefficients_post", "overwrite")
+# insert_db(coeff_df, "coefficients_post", "overwrite")
 
 
 

@@ -1,0 +1,129 @@
+-- Extension: intarray
+
+DROP EXTENSION IF EXISTS intarray;
+
+CREATE EXTENSION intarray
+    SCHEMA public
+    VERSION "1.2";
+
+-- Extension: plpgsql
+
+DROP EXTENSION IF EXISTS plpgsql;
+
+CREATE EXTENSION plpgsql
+    SCHEMA pg_catalog
+    VERSION "1.0";
+
+-- FUNCTION: public.intersection(anyarray, anyarray)
+
+DROP FUNCTION IF EXISTS public.intersection(anyarray, anyarray);
+
+CREATE OR REPLACE FUNCTION public.intersection(
+	anyarray,
+	anyarray)
+    RETURNS anyarray
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE
+AS $BODY$
+SELECT ARRAY(
+    SELECT $1[i]
+    FROM generate_series( array_lower($1, 1), array_upper($1, 1) ) i
+    WHERE ARRAY[$1[i]] && $2
+);
+$BODY$;
+
+ALTER FUNCTION public.intersection(anyarray, anyarray)
+    OWNER TO pooja;
+
+-- FUNCTION: public."union"(anyarray, anyarray)
+
+DROP FUNCTION IF EXITS public."union"(anyarray, anyarray);
+
+CREATE OR REPLACE FUNCTION public."union"(
+	a1 anyarray,
+	a2 anyarray)
+    RETURNS anyarray
+    LANGUAGE 'sql'
+
+    COST 100
+    VOLATILE
+AS $BODY$
+SELECT ARRAY_AGG(x ORDER BY x) FROM ( SELECT DISTINCT UNNEST($1 || $2) AS x ) s;
+$BODY$;
+
+ALTER FUNCTION public."union"(anyarray, anyarray)
+    OWNER TO pooja;
+
+-- Table: public.post_batch
+
+DROP TABLE IF EXISTS public.post_batch;
+
+CREATE TABLE public.post_batch
+(
+    id integer,
+    minhash bigint[],
+    title text COLLATE pg_catalog."default",
+    tags text[] COLLATE pg_catalog."default"
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.post_batch
+    OWNER to pooja;
+
+-- Table: public.coefficients_code
+
+DROP TABLE IF EXISTS public.coefficients_code;
+
+CREATE TABLE public.coefficients_code
+(
+    "coeffA" bigint,
+    "coeffB" bigint
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.coefficients_code
+    OWNER to pooja;
+
+-- Table: public.coefficients_post
+
+DROP TABLE IF EXISTS public.coefficients_post;
+
+CREATE TABLE public.coefficients_post
+(
+    "coeffA" bigint,
+    "coeffB" bigint
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.coefficients_post
+    OWNER to pooja;
+
+-- Table: public.post_code_batch
+
+DROP TABLE IF EXISTS public.post_code_batch;
+
+CREATE TABLE public.post_code_batch
+(
+    id integer,
+    minhash bigint[],
+    title text COLLATE pg_catalog."default",
+    tags text[] COLLATE pg_catalog."default"
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.post_code_batch
+    OWNER to pooja;

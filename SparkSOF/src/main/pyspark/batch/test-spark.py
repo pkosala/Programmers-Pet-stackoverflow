@@ -12,40 +12,48 @@ from pyspark.ml.feature import StopWordsRemover
 from pyspark.ml.feature import Tokenizer
 from pyspark.sql import DataFrameReader
 
-
 import nltk
+
 nltk.download("wordnet")
 from nltk.stem import WordNetLemmatizer
 from nltk import ngrams
 
+import boto3
+
+import time
+start_time = time.time()
+
+
+client = boto3.client('s3')
+resource = boto3.resource('s3')
+bucket_name = 'insightstackoverflowsample'
+bucket = resource.Bucket(bucket_name)
 
 conf = (SparkConf().setMaster("local").setAppName("SFO_Search"))
-sc = SparkContext(conf = conf)
+sc = SparkContext(conf=conf)
 sc.setLogLevel("ERROR")
 sqlContext = SQLContext(sc)
 
-sfo_bucket = "s3a://insightstackoverflowsample/FinalData/Questions/Q1_000000000000.json"
+# sfo_bucket = "s3a://insightstackoverflowsample/FinalData/Questions/Q1_000000000000.json"
 numHashes = 10
 maxShingleID = 2 ** 32 - 1
 nextPrime = 4294967311
 
 
-def pick_random_coeffs( k):
+def pick_random_coeffs(k):
     #  TODO: Move this to initialize DB
     randList = []
     while k > 0:
-        # Get a random shingle ID.
         randIndex = random.randint(0, maxShingleID)
 
-        # Ensure that each random number is unique.
         while randIndex in randList:
             randIndex = random.randint(0, maxShingleID)
 
-        # Add the random number to the list.
         randList.append(randIndex)
         k = k - 1
 
     return randList
+
 
 def get_code(body):
     if body is None or body == '':
@@ -63,13 +71,26 @@ def get_code(body):
 
     return code.lower()
 
+
+def get_description(body, title=''):
+    if body is None or body == '':
+        return None
+    body = title + ' ' + body
+    desc = re.sub('<code>.*?</code>', '', body, flags=re.DOTALL)  # remove code from description
+    desc = re.sub(r'<[^>]+>', '', desc, flags=re.DOTALL)  # remove all tags
+    desc = re.sub(r'\s+', ' ', desc, flags=re.DOTALL)  # replace all new lines and multiple spaces with single space
+    desc = re.sub(r'[^\x00-\x7f]', r'', desc)  # remove all non-ascii characters
+    desc = re.sub('[' + string.punctuation + ']', '', desc)  # remove all punctuations
+    return desc.lower()
+
+
 def get_tags(tags):
     tag_array = str(tags).split('|')
     tag_array = [x.lower() for x in tag_array]
     return tag_array
 
 
-# remove stem words from code
+# remove stem words from descriptioon
 def lemmatize(tokens):
     wordnet_lemmatizer = WordNetLemmatizer()
     stems = [wordnet_lemmatizer.lemmatize(token) for token in tokens if len(token) > 1]
@@ -84,6 +105,7 @@ def generate_shingles(desc, shingle_size=2):
     for each_gram in n_grams:
         shingle = ' '.join(each_gram)
         crc = binascii.crc32(shingle.encode()) & 0xffffffff
+
         shinglesInDoc.add(crc)
     return list(shinglesInDoc)
 
@@ -104,6 +126,27 @@ def generate_minhash_signatures(shingles, coeffA, coeffB):
     return signature
 
 
+def read_filenames(bucket, prefix):
+    prefix_objs = bucket.objects.filter(Prefix=prefix)
+    print(prefix_objs)
+    file_list = []
+
+    for obj in prefix_objs:
+        key = obj.key
+        if key.endswith(".json"):
+            file_list.append(key)
+    return file_list
+
+
+def insert_db(df, table_name, _mode):
+    url = "jdbc:postgresql://ec2-3-94-26-85.compute-1.amazonaws.com/insight"
+    properties = {
+        "user": "pooja",
+        "password": "123",
+        "driver": "org.postgresql.Driver"
+    }
+    df.write.jdbc(url=url, table=table_name, mode=_mode, properties=properties)
+
 
 def read_db(table_name):
     url = "jdbc:postgresql://ec2-3-94-26-85.compute-1.amazonaws.com/insight"
@@ -118,68 +161,24 @@ def read_db(table_name):
     return df
 
 
-df = sqlContext.read.json(sfo_bucket)
-df = df.withColumn("id", df["id"].cast(IntegerType()))
-df.show()
+# TODO: can do better instead of converting them to lists
+# coeff_df = read_db("coefficients_post")
+# coeffA = [int(row.coeffA) for row in coeff_df.select("coeffA").collect()]
+# coeffB = [int(row.coeffB) for row in coeff_df.select("coeffB").collect()]
 
-udf_get_tag_array = udf(get_tags,ArrayType(StringType()))
-df = df.withColumn("tags", udf_get_tag_array("tags"))
+# print(coeffA)
+file_list = read_filenames(bucket, "FinalData/Questions/")
 
-df.show()
+for each_file in file_list:
+    full_path = "s3a://" + bucket_name + "/" + each_file
+    print("===========================  " + full_path + " ==================================")
 
-udf_getCode = udf(get_code, StringType())
-df = df.withColumn("code", udf_getCode("body"))
-df.show()
+    df = sqlContext.read.json(full_path)
+    df = df.withColumn("id", df["id"].cast(LongType()))
+    d
+    max_val = df.agg({"id": "max"}).collect()[0]["max(id)"]
+    min_val = df.agg({"id": "min"}).collect()[0]["min(id)"]
+    print(each_file, max_val,min_val)
+print("Total Time --- %s seconds ---" % (time.time() - start_time))
 
-df = df.select('id', 'code', 'title', 'tags')
-df = df.withColumn("code_length", fn.length('code'))
-df = df.filter(fn.col('code_length') > 50)
-df.show()
-
-tokenizer = Tokenizer(inputCol="code", outputCol="code_tokens")
-df = tokenizer.transform(df)
-
-stop_words_remover = StopWordsRemover(inputCol="code_tokens", outputCol="code_stop_words_removed")
-df = stop_words_remover.transform(df)
-
-stem = udf(lambda tokens: lemmatize(tokens), ArrayType(StringType()))
-df = df.withColumn("code_stemmed", stem("code_stop_words_removed"))
-df.show()
-
-udf_shingle = udf(generate_shingles, ArrayType(LongType()))
-df = df.withColumn('shingles', udf_shingle("code_stop_words_removed"))
-df = df.select('id', 'shingles', 'title', 'tags')
-df.show()
-
-# coeffA = pick_random_coeffs(numHashes)
-# coeffB = pick_random_coeffs(numHashes)
-#
-# coeffs = zip(coeffA, coeffB)
-# coeff_dict = [{"coeffA":x[0],"coeffB":x[1]} for x in coeffs]
-# coeff_schema = StructType([StructField('coeffA', LongType(), True), StructField('coeffB', LongType(), True)])
-# coeff_df = sqlContext.createDataFrame(data = coeff_dict,schema = coeff_schema)
-coeff_df = read_db("coefficients_post")
-coeffA = [int(row.coeffA) for row in coeff_df.select("coeffA").collect()]
-coeffB = [int(row.coeffB) for row in coeff_df.select("coeffB").collect()]
-
-
-minhash_udf = udf(generate_minhash_signatures, ArrayType(LongType()))
-df = df.withColumn('minhash', minhash_udf("shingles", fn.array([fn.lit(x) for x in coeffA]), fn.array([fn.lit(x) for x in coeffB])))
-df = df.select('id', 'minhash', 'title', 'tags')
-df.show()
-
-def insert_db(df, table_name, _mode):
-    url = "jdbc:postgresql://ec2-3-94-26-85.compute-1.amazonaws.com/insight"
-    properties = {
-        "user": "pooja",
-        "password": "123",
-        "driver": "org.postgresql.Driver"
-    }
-    df.write.jdbc(url=url, table=table_name, mode=_mode, properties=properties)
-
-
-insert_db(df, "Post_code", "overwrite")
-insert_db(coeff_df, "coefficients_code", "overwrite")
-
-
-
+f.show()
