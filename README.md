@@ -47,7 +47,7 @@ This application can be used in following ways:
 
 
 ### Architecture
-![Architecture](https://github.com/pkosala/Programmers-Pet-stackoverflow/tree/master/SparkSOF/src/imgs/pipeline.png)
+![Architecture](https://github.com/pkosala/Programmers-Pet-stackoverflow/blob/master/SparkSOF/src/imgs/Pipeline.PNG)
 ###
 ## Engineering Challenges and Conclusions
 
