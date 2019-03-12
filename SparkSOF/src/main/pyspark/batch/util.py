@@ -7,7 +7,8 @@ import nltk
 nltk.download("wordnet")
 from nltk.stem import WordNetLemmatizer
 from nltk import ngrams
-
+import pickle
+import mmh3
 
 numHashes = 10
 maxShingleID = 2 ** 32 - 1
@@ -92,3 +93,9 @@ def read_filenames(bucket, prefix_folder):
         if key.endswith(".json"):
             file_list.append(key)
     return file_list
+
+
+def find_lsh_buckets(hash_signature, lsh_band_width, lsh_num_buckets):
+    bands = [tuple(hash_signature[i:i + lsh_band_width]) for i in range(0, len(hash_signature), lsh_band_width)]
+    lsh_hashes = [(mmh3.hash64(pickle.dumps(row))[0] % lsh_num_buckets) for row in bands]
+    return lsh_hashes

@@ -64,6 +64,7 @@ CREATE TABLE public.post_batch
 (
     id integer,
     minhash bigint[],
+    lsh bigint[],
     title text COLLATE pg_catalog."default",
     tags text[] COLLATE pg_catalog."default"
 )
@@ -117,6 +118,7 @@ CREATE TABLE public.post_code_batch
 (
     id integer,
     minhash bigint[],
+    lsh bigint[],
     title text COLLATE pg_catalog."default",
     tags text[] COLLATE pg_catalog."default"
 )

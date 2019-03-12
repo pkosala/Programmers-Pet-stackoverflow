@@ -21,3 +21,6 @@ JDBC_DRIVER = "org.postgresql.Driver"
 
 SPARK_MASTER_URL = ""
 SPARK_APP_NAME = ""
+LSH_num_bands = 100
+LSH_band_width = 10
+LSH_num_buckets = 10000

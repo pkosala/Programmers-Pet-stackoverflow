@@ -7,7 +7,7 @@ from pyspark.ml.feature import StopWordsRemover
 from pyspark.ml.feature import Tokenizer
 from databaseutil import DatabaseOperations
 
-from util import get_tags, get_description, generate_shingles,read_filenames, numHashes, nextPrime, lemmatize
+from util import get_tags, get_description, generate_shingles,read_filenames, numHashes, nextPrime, lemmatize, find_lsh_buckets
 import config
 import boto3
 import time
@@ -91,6 +91,10 @@ for sub in subList:
     minhash_udf = udf(generate_minhash_signatures, ArrayType(LongType()))
     df = df.withColumn('minhash', minhash_udf("shingles"))
     df = df.select('id', 'minhash', 'title', 'tags')
+
+    lsh_udf = udf(find_lsh_buckets, ArrayType(LongType()))
+    df = df.withColumn('lsh', lsh_udf("minshash"))
+    df = df.select('id', 'minhash', 'title', 'tags', 'lsh')
 
     df.show()
 

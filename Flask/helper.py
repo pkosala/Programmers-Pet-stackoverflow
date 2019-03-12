@@ -6,6 +6,8 @@ import json
 from psycopg2.extras import RealDictCursor
 import nltk
 from nltk.corpus import stopwords
+import mmh3
+import pickle
 en_stops = set(stopwords.words('english'))
 nltk.download("wordnet")
 nltk.download("stopwords")
@@ -16,6 +18,9 @@ from nltk import word_tokenize
 
 maxShingleID = 2 ** 25 - 1
 nextPrime = 4294967311
+LSH_num_bands = 100
+LSH_band_width = 10
+LSH_num_buckets = 10000
 
 db_dict_table_names = {
     "coefficients_posts": "coefficients_post",
@@ -46,9 +51,10 @@ def getCoefficients(table_name):
     return coeffA, coeffB
 
 
-def get_similar_posts_by_query(signature_of_query, tags_string, limit_count):
+def get_similar_posts_by_query(signature_of_query, lsh_of_query, tags_string, limit_count):
     query_vector = ','.join([str(i) for i in signature_of_query])
     tags_vector = ','.join([str(i) for i in [x.strip().lower() for x in tags_string.split(',')]])
+    lsh_vector = ','.join([str(i) for i in lsh_of_query])
     # jaccard_similarity_query = """ with cte_compare as (select id, title,ROW_NUMBER () OVER (ORDER BY jaccard_sim) as disp_order
     #                             from (
     #                             select id, title,
@@ -87,7 +93,7 @@ def get_similar_posts_by_query(signature_of_query, tags_string, limit_count):
     from (
     select id, title,
     round(array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )/(array_upper(mergeArrays(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]) , 1 ) *1.0), 3) as jaccard_sim
-    from """+db_dict_table_names["posts_table"]+""" where tags @> '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0
+    from """+db_dict_table_names["posts_table"]+""" where lsh @> '{"""+lsh_vector+"""}' AND tags @> '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0
     ) t 
     order by jaccard_sim desc
     limit """+str(limit_count)+"""  
@@ -95,7 +101,7 @@ def get_similar_posts_by_query(signature_of_query, tags_string, limit_count):
     from (
     select id, title,
     round(array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )/(array_upper(mergeArrays(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]) , 1 ) *1.0), 3) as jaccard_sim
-    from """+db_dict_table_names["posts_table"]+""" where tags && '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0 AND id not in (SELECT id from match_all_tags)
+    from """+db_dict_table_names["posts_table"]+""" where lsh && '{"""+lsh_vector+"""}' AND tags && '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0 AND id not in (SELECT id from match_all_tags)
     ) t 
     order by jaccard_sim desc
     limit """+str(limit_count)+"""  
@@ -129,15 +135,15 @@ def get_similar_posts_by_query(signature_of_query, tags_string, limit_count):
     # return "This is needs a fix"
 
 
-def get_similar_posts_by_code(signature_of_code, tags_string, limit_count):
+def get_similar_posts_by_code(signature_of_code, lsh_of_code, tags_string, limit_count):
     query_vector = ','.join([str(i) for i in signature_of_code])
     tags_vector = ','.join([str(i) for i in [x.strip().lower() for x in tags_string.split(',')]])
-
+    lsh_vector = ','.join([str(i) for i in lsh_of_code])
     jaccard_similarity_code = """with match_all_tags as (select id, title,ROW_NUMBER () OVER (ORDER BY jaccard_sim ) as disp_order, 1 as query_type, jaccard_sim
     from (
     select id, title,
     round(array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )/(array_upper(mergeArrays(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]) , 1 ) *1.0), 3) as jaccard_sim
-    from """+db_dict_table_names["code_table"]+""" where tags @> '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0
+    from """+db_dict_table_names["code_table"]+""" where lsh @> '{"""+lsh_vector+"""}' AND tags @> '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0
     ) t 
     order by jaccard_sim desc
     limit """+str(limit_count)+"""  
@@ -145,7 +151,7 @@ def get_similar_posts_by_code(signature_of_code, tags_string, limit_count):
     from (
     select id, title,
     round(array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )/(array_upper(mergeArrays(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]) , 1 ) *1.0), 3) as jaccard_sim
-    from """+db_dict_table_names["code_table"]+""" where tags && '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0 AND id not in (SELECT id from match_all_tags)
+    from """+db_dict_table_names["code_table"]+""" where lsh && '{"""+lsh_vector+"""}' AND tags && '{"""+tags_vector+"""}' AND array_upper(intersection(minhash::BIGINT[], ARRAY[""" + query_vector+"""]::BIGINT[]), 1 )>0 AND id not in (SELECT id from match_all_tags)
     ) t 
     order by jaccard_sim desc
     limit """+str(limit_count)+"""  
@@ -230,6 +236,12 @@ def generate_minhash_signature(shingles_in_query, coeffA, coeffB):
     return signature_of_cur_doc
 
 
+def find_lsh_buckets(hash_signature, lsh_band_width, lsh_num_buckets):
+    bands = [tuple(hash_signature[i:i + lsh_band_width]) for i in range(0, len(hash_signature), lsh_band_width)]
+    lsh_hashes = [(mmh3.hash64(pickle.dumps(row))[0] % lsh_num_buckets) for row in bands]
+    return lsh_hashes
+
+
 def get_processed_query(query):
     desc = re.sub(r'\s+', ' ', query, flags=re.DOTALL)  # replace all new lines and multiple spaces with single space
     desc = re.sub(r'[^\x00-\x7f]', r'', desc)  # remove all non-ascii characters
@@ -274,7 +286,8 @@ def process_query_get_results(query, tags_string, code):
     processed_query = get_processed_query(query)
     shingles_in_query = generate_shingles(processed_query)
     signature_of_query = generate_minhash_signature(shingles_in_query, desc_coeffA, desc_coeffB)
-    similar_posts_by_query = get_similar_posts_by_query(signature_of_query, tags_string, 10)
+    lsh_band = find_lsh_buckets(signature_of_query, LSH_band_width, LSH_num_buckets)
+    similar_posts_by_query = get_similar_posts_by_query(signature_of_query, tags_string, 10, lsh_band)
 
     if code.strip() is None or code.strip() =="":
         similar_posts_by_code =[]
@@ -283,7 +296,10 @@ def process_query_get_results(query, tags_string, code):
         processed_code = get_processed_code(code)
         shingles_in_code = generate_shingles(processed_code)
         signature_of_code = generate_minhash_signature(shingles_in_code, code_coeffA, code_coeffB)
-        similar_posts_by_code = get_similar_posts_by_code(signature_of_code, tags_string, 10)
+        lsh_band = find_lsh_buckets(signature_of_query, LSH_band_width, LSH_num_buckets)
+        # similar_posts_by_query = get_similar_posts_by_query(signature_of_query, tags_string, 10, lsh_band)
+
+        similar_posts_by_code = get_similar_posts_by_code(signature_of_code, tags_string, 10, lsh_band)
 
     data = {}
     data['matches_by_query'] = similar_posts_by_query

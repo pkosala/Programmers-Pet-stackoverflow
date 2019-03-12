@@ -2,21 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5027e8ac-5be3-4920-917a-24c4b795af87" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/SparkSOF/src/main/database/create_index" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SparkSOF/src/main/database/create_table" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SparkSOF/src/main/database/run_create_db.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SparkSOF/src/main/database/run_create_index.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/databaseutil.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/config/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/SOF.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SOF.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Flask/static/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/Flask/static/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Flask/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Flask/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process_code.py" beforeDir="false" afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process_code.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process_posts.py" beforeDir="false" afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process_posts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flask/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Flask/helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SparkSOF/src/database/create_table" beforeDir="false" afterPath="$PROJECT_DIR$/SparkSOF/src/database/create_table" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process_code.py" beforeDir="false" afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process_code.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/SparkSOF/src/main/pyspark/config/config.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,78 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="full_batch_process.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process.py">
+      <file leaf-file-name="create_table" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SparkSOF/src/database/create_table">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create_table" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/create_table">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create_index" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/create_index">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="693">
-              <caret line="33" column="32" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="run_create_db.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/run_create_db.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="run_create_index.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/run_create_index.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="util.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-43">
-              <caret line="67" column="8" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#32#323#0" />
-                <element signature="e#350#1257#0" />
-                <element signature="e#1301#1863#0" />
-                <element signature="e#1890#1990#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="databaseutil.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/databaseutil.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="37" column="62" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="62" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="196">
+              <caret line="66" column="17" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -106,17 +31,31 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/config/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="22" column="14" selection-start-line="22" selection-end-line="22" selection-end-column="14" />
+            <state relative-caret-position="483">
+              <caret line="23" selection-start-line="23" selection-end-line="25" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="batch_process_code.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process_code.py">
+      <file leaf-file-name="helper.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Flask/helper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="173" column="22" selection-start-line="173" selection-start-column="17" selection-end-line="173" selection-end-column="22" />
+            <state relative-caret-position="-2235">
+              <caret line="153" column="63" selection-start-line="153" selection-start-column="63" selection-end-line="153" selection-end-column="63" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#1564#1690#0" />
+                <element signature="e#8922#9080#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="full_batch_process.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-9">
+              <caret line="78" column="52" lean-forward="true" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -127,8 +66,20 @@
       <file leaf-file-name="full_batch_process_code.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-820">
-              <caret line="45" column="50" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="50" />
+            <state relative-caret-position="273">
+              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="27" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="util.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="488">
+              <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="100" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -161,13 +112,18 @@
       <find>nltk</find>
       <find>lemm</find>
       <find>client</find>
+      <find>\</find>
       <find>db_connector</find>
+      <find>axis</find>
+      <find>th</find>
+      <find>th,</find>
     </findStrings>
     <replaceStrings>
       <replace>int32</replace>
       <replace>query_div</replace>
       <replace>&quot;&quot;&quot; + query_vector+&quot;&quot;&quot;</replace>
       <replace>&quot;&quot;&quot;+tags_vector+&quot;&quot;&quot;</replace>
+      <replace>//</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -182,7 +138,6 @@
         <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/test.py" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process.py" />
         <option value="$PROJECT_DIR$/Flask/static/app.js" />
-        <option value="$PROJECT_DIR$/Flask/helper.py" />
         <option value="$PROJECT_DIR$/Flask/app.py" />
         <option value="$PROJECT_DIR$/Flask/static/app.css" />
         <option value="$PROJECT_DIR$/Flask/templates/index.html" />
@@ -190,22 +145,26 @@
         <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/test-spark.py" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process_code.py" />
         <option value="$PROJECT_DIR$/SparkSOF/src/config/config.py" />
-        <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/config/config.py" />
-        <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process_code.py" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/databaseutil.py" />
-        <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process.py" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/database/create_tables" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/database/create_table" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/database/create_index" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/database/run_create_Db.sh" />
         <option value="$PROJECT_DIR$/SparkSOF/src/main/database/run_create_index.sh" />
+        <option value="$PROJECT_DIR$/SparkSOF/src/database/temp.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/config/config.py" />
+        <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py" />
+        <option value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process.py" />
+        <option value="$PROJECT_DIR$/Flask/helper.py" />
+        <option value="$PROJECT_DIR$/SparkSOF/src/database/create_table" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-280" />
-    <option name="y" value="131" />
+    <option name="y" value="130" />
     <option name="width" value="1010" />
     <option name="height" value="1040" />
   </component>
@@ -256,7 +215,7 @@
               <item name="SOF" type="462c0819:PsiDirectoryNode" />
               <item name="SparkSOF" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SOF" type="b2602c69:ProjectViewProjectNode" />
@@ -264,12 +223,6 @@
               <item name="SparkSOF" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SOF" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SOF" type="462c0819:PsiDirectoryNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -284,6 +237,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pkosala\Desktop\Insight\Project\SOF\SparkSOF\src" />
       <recent name="C:\Users\pkosala\Desktop\Insight\Project\SOF\SparkSOF\src\main\pyspark\config" />
       <recent name="C:\Users\pkosala\Desktop\Insight\Project\SOF\SparkSOF\src\main\pyspark\batch" />
       <recent name="C:\Users\pkosala\Desktop\Insight\Project\SOF\SparkSOF\src\main\pyspark" />
@@ -307,7 +261,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.databaseutil">
+  <component name="RunManager" selected="Python.temp">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="SOF" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -339,6 +293,24 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/databaseutil.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="temp" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="SOF" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SparkSOF/src/database" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SparkSOF/src/database/temp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -385,9 +357,11 @@
       <item itemvalue="Python.tet_python" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.databaseutil" />
+      <item itemvalue="Python.temp" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.temp" />
         <item itemvalue="Python.databaseutil" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python.test" />
@@ -412,7 +386,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17317708" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14648438" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="R Packages" order="2" />
       <window_info anchor="right" id="R Graphics" order="0" />
@@ -422,7 +396,7 @@
       <window_info anchor="bottom" id="Python Console" order="5" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49739584" weight="0.26206896" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49739584" weight="0.38068965" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
@@ -441,37 +415,37 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Flask/helper.py</url>
-          <line>272</line>
+          <line>284</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Flask/helper.py</url>
-          <line>49</line>
+          <line>54</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Flask/helper.py</url>
-          <line>291</line>
+          <line>307</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Flask/helper.py</url>
-          <line>268</line>
+          <line>280</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Flask/helper.py</url>
-          <line>186</line>
+          <line>192</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Flask/helper.py</url>
-          <line>114</line>
+          <line>120</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Flask/helper.py</url>
-          <line>118</line>
+          <line>124</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -486,7 +460,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Flask/helper.py</url>
-          <line>219</line>
+          <line>225</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -518,12 +492,27 @@
           <line>4</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SparkSOF/src/database/temp.py</url>
+          <line>6434</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="47" />
+      <option name="time" value="60" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>df.columns</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(mds_data)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + &quot;/config&quot;</expression-string>
         <language-id>Python</language-id>
@@ -559,88 +548,9 @@
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>import json
-json.loads(request.form)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>json.loads(request.form)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Flask/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2394">
-          <caret line="114" column="58" selection-start-line="114" selection-start-column="58" selection-end-line="114" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Flask/helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3087">
-          <caret line="153" selection-start-line="153" selection-end-line="153" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process_posts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="52" column="39" lean-forward="true" selection-start-line="52" selection-start-column="39" selection-end-line="52" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Flask/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/batch_process_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2142">
-          <caret line="114" column="9" lean-forward="true" selection-start-line="107" selection-end-line="114" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Flask/helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3087">
-          <caret line="153" selection-start-line="153" selection-end-line="153" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Flask/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Flask/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="14" column="38" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Flask/static/app.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -661,6 +571,8 @@ json.loads(request.form)</expression-string>
           <caret line="127" selection-start-line="127" selection-end-line="127" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#1564#1690#0" />
+            <element signature="e#8922#9080#0" />
           </folding>
         </state>
       </provider>
@@ -705,6 +617,8 @@ json.loads(request.form)</expression-string>
           <caret line="14" column="76" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="76" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#1564#1690#0" />
+            <element signature="e#8922#9080#0" />
           </folding>
         </state>
       </provider>
@@ -814,13 +728,6 @@ json.loads(request.form)</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Flask/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/QJ_000000000001.json">
       <provider selected="true" editor-type-id="LargeFileEditor">
         <state relative-caret-position="231">
@@ -852,23 +759,6 @@ json.loads(request.form)</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Flask/static/app.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Flask/helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1113">
-          <caret line="96" column="46" selection-start-line="96" selection-start-column="46" selection-end-line="96" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -880,30 +770,6 @@ json.loads(request.form)</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4533">
           <caret line="426" column="8" selection-start-line="426" selection-start-column="8" selection-end-line="426" selection-end-column="8" />
-          <folding>
-            <element signature="e#22504#25468#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/config/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="22" column="14" selection-start-line="22" selection-end-line="22" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-43">
-          <caret line="67" column="8" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#32#323#0" />
-            <element signature="e#350#1257#0" />
-            <element signature="e#1301#1863#0" />
-            <element signature="e#1890#1990#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -911,16 +777,6 @@ json.loads(request.form)</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="173" column="22" selection-start-line="173" selection-start-column="17" selection-end-line="173" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-820">
-          <caret line="45" column="50" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -934,48 +790,148 @@ json.loads(request.form)</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/create_tables">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="25" selection-start-column="25" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/create_table">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/create_index">
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/create_tables" />
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/database/create_index">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="693">
           <caret line="33" column="32" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/run_create_db.sh">
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/database/run_create_db.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/database/run_create_index.sh">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/scipy/optimize/tnc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+        <state relative-caret-position="247">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pandas/core/indexing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1215">
+          <caret line="1274" column="38" lean-forward="true" selection-start-line="1274" selection-start-column="38" selection-end-line="1274" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pandas/core/reshape/concat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3696">
+          <caret line="186" column="37" selection-start-line="186" selection-start-column="7" selection-end-line="186" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pandas/core/generic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22323">
+          <caret line="1120" selection-start-line="1120" selection-end-line="1120" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pandas/io/json/json.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2205">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Flask/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Flask/static/app.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2814">
+          <caret line="134" column="18" selection-start-line="134" selection-start-column="2" selection-end-line="134" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/database/temp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="6414" column="5" lean-forward="true" selection-start-line="6414" selection-start-column="5" selection-end-line="6414" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/database/run_create_index.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="41" selection-start-line="2" selection-start-column="41" selection-end-line="2" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="60" column="44" selection-start-line="60" selection-start-column="44" selection-end-line="60" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pandas/core/indexes/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="2686" selection-start-line="2686" selection-end-line="2686" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process_code.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="27" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/full_batch_process.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9">
+          <caret line="78" column="52" lean-forward="true" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/batch/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="100" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/main/pyspark/config/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="23" selection-start-line="23" selection-end-line="25" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Flask/helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2235">
+          <caret line="153" column="63" selection-start-line="153" selection-start-column="63" selection-end-line="153" selection-end-column="63" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#1564#1690#0" />
+            <element signature="e#8922#9080#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SparkSOF/src/database/create_table">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="66" column="17" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
         </state>
       </provider>
     </entry>

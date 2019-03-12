@@ -32,7 +32,6 @@ This application can be used in following ways:
 	*  Each question text body is tokenized, non-ascii characters and extra white spaces are removed.
 	*  Tri-gram words are generated of both question text body and code are generated.
 
-
 #### Generating Hash Vectors - MinHashLSH, Stack Overflow
 * Trigram words are hashed using binasccii library provided by python.
 * The hashed representation is still variable in length, so we hash it again to a fixed length vectors by randomly projecting them on different hyperplanes.
