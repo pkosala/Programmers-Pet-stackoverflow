@@ -55,40 +55,7 @@ def get_similar_posts_by_query(signature_of_query, lsh_of_query, tags_string, li
     query_vector = ','.join([str(i) for i in signature_of_query])
     tags_vector = ','.join([str(i) for i in [x.strip().lower() for x in tags_string.split(',')]])
     lsh_vector = ','.join([str(i) for i in lsh_of_query])
-    # jaccard_similarity_query = """ with cte_compare as (select id, title,ROW_NUMBER () OVER (ORDER BY jaccard_sim) as disp_order
-    #                             from (
-    #                             select id, title,
-    #                             round(array_upper(minhash & ARRAY[""" + query_vector+"""], 1 )/(array_upper(minhash | ARRAY[""" + query_vector+"""] , 1 ) *1.0), 3) as jaccard_sim
-    #                             from post where ARRAY[""" + query_vector+"""] && minhash AND tags @> '{"""+tags_vector+"""}'
-    #                             ) t
-    #                             order by jaccard_sim desc
-    #                             limit 10
-    #                             )
-    #                             select id, title, disp_order FROM cte_compare order by disp_order;"""
-    # jaccard_similarity_query = """with match_all_tags as (select id, title,ROW_NUMBER () OVER (ORDER BY jaccard_sim ) as disp_order, 1 as query_type, jaccard_sim
-    #                             from (
-    #                             select id, title,
-    #                             round(array_upper(minhash & ARRAY[""" + query_vector+"""], 1 )/(array_upper(minhash | ARRAY[""" + query_vector+"""] , 1 ) *1.0), 3) as jaccard_sim
-    #                             from post where tags @> '{"""+tags_vector+"""}' AND ARRAY[""" + query_vector+"""] && minhash
-    #                             ) t
-    #                             order by jaccard_sim desc
-    #                             limit """+str(limit_count)+"""
-    #                             ),match_any_tag as (select id, title,ROW_NUMBER () OVER (ORDER BY jaccard_sim) as disp_order, 2 as query_type, jaccard_sim
-    #                             from (
-    #                             select id, title,
-    #                             round(array_upper(minhash & ARRAY[""" + query_vector+"""], 1 )/(array_upper(minhash | ARRAY[""" + query_vector+"""] , 1 ) *1.0), 3) as jaccard_sim
-    #                             from post where tags && '{"""+tags_vector+"""}' AND ARRAY[""" + query_vector+"""] && minhash AND id not in (SELECT id from match_all_tags)
-    #                             ) t
-    #                             order by jaccard_sim desc
-    #                             limit """+str(limit_count)+"""
-    #                             )
-    #                             SELECT id, title, jaccard_sim, (query_type*10)+disp_order as disp_order
-    #                             from (
-    #                             select id, title, disp_order,query_type,((jaccard_sim::numeric)::text) as jaccard_sim FROM match_all_tags
-    #                             union
-    #                             select id, title, disp_order,query_type,(jaccard_sim::numeric)::text as jaccard_sim FROM match_any_tag
-    #                             ) T
-    #                             order by (query_type*10)+disp_order limit """+str(limit_count)+""" ;"""
+
     jaccard_similarity_query = """with match_all_tags as (select id, title,ROW_NUMBER () OVER (ORDER BY jaccard_sim ) as disp_order, 1 as query_type, jaccard_sim
     from (
     select id, title,
@@ -164,30 +131,6 @@ def get_similar_posts_by_code(signature_of_code, lsh_of_code, tags_string, limit
     ) T
     order by (query_type*10)+disp_order limit """+str(limit_count)+"""  ;"""
 
-    # jaccard_similarity_code = """with match_all_tags as (select id, title,ROW_NUMBER () OVER (ORDER BY jaccard_sim ) as disp_order, 1 as query_type, jaccard_sim
-    #                             from (
-    #                             select id, title,
-    #                             round(array_upper(minhash & ARRAY[""" + query_vector+"""], 1 )/(array_upper(minhash | ARRAY[""" + query_vector+"""] , 1 ) *1.0), 3) as jaccard_sim
-    #                             from post_code where tags @> '{"""+tags_vector+"""}' AND ARRAY[""" + query_vector+"""] && minhash
-    #                             ) t
-    #                             order by jaccard_sim desc
-    #                             limit """+str(limit_count)+"""
-    #                             ),match_any_tag as (select id, title,ROW_NUMBER () OVER (ORDER BY jaccard_sim) as disp_order, 2 as query_type, jaccard_sim
-    #                             from (
-    #                             select id, title,
-    #                             round(array_upper(minhash & ARRAY[""" + query_vector+"""], 1 )/(array_upper(minhash | ARRAY[""" + query_vector+"""] , 1 ) *1.0), 3) as jaccard_sim
-    #                             from post_code where tags && '{"""+tags_vector+"""}' AND ARRAY[""" + query_vector+"""] && minhash AND id not in (SELECT id from match_all_tags)
-    #                             ) t
-    #                             order by jaccard_sim desc
-    #                             limit """+str(limit_count)+"""
-    #                             )
-    #                             SELECT id, title, jaccard_sim, (query_type*10)+disp_order as disp_order
-    #                             from (
-    #                             select id, title, disp_order,query_type,((jaccard_sim::numeric)::text) as jaccard_sim FROM match_all_tags
-    #                             union
-    #                             select id, title, disp_order,query_type,(jaccard_sim::numeric)::text as jaccard_sim FROM match_any_tag
-    #                             ) T
-    #                             order by (query_type*10)+disp_order limit """+str(limit_count)+""" ;"""
 
     print(jaccard_similarity_code)
     conn = None

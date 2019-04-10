@@ -12,11 +12,11 @@ S3_BUCKET_BATCH_RAW = "insightstackoverflowsample"
 S3_DATA_FOLDER = "/FinalData/Questions/"
 
 
-JDBC_HOST = "ec2-3-94-26-85.compute-1.amazonaws.com"
+JDBC_HOST = "ec2-x-yy-zz-ww.compute-1.amazonaws.com"
 JDBC_PORT = "80"
 JDBC_DB_NAME = "insight"
-JDBC_USER = "pooja"
-JDBC_PASSWORD = "123"
+JDBC_USER = ""
+JDBC_PASSWORD = ""
 JDBC_DRIVER = "org.postgresql.Driver"
 
 SPARK_MASTER_URL = ""
